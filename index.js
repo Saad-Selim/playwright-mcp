@@ -15,5 +15,8 @@
  * limitations under the License.
  */
 
-import { createConnection } from './lib/index';
-export { createConnection };
+const { sum } = require('./lib/index');
+
+module.exports = {
+  sum
+};

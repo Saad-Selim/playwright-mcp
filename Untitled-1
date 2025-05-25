@@ -1,0 +1,2 @@
+// Add your library code here
+export const sum = (a, b) => a + b;

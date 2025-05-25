@@ -14,19 +14,24 @@
  * limitations under the License.
  */
 
-import { defineConfig } from '@playwright/test';
+import { defineConfig, devices } from '@playwright/test';
 
 import type { TestOptions } from './tests/fixtures.js';
 
 export default defineConfig<TestOptions>({
   testDir: './tests',
+  timeout: 30000,
   fullyParallel: true,
-  forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
-  reporter: 'list',
+  reporter: 'html',
+  use: {
+    baseURL: 'http://localhost:3000',
+    screenshot: 'only-on-failure'
+  },
   projects: [
-    { name: 'chrome' },
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
+    },
     { name: 'msedge', use: { mcpBrowser: 'msedge' } },
     { name: 'chromium', use: { mcpBrowser: 'chromium' } },
     ...process.env.MCP_IN_DOCKER ? [{
